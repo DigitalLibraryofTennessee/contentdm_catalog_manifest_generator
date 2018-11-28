@@ -117,7 +117,7 @@ class OAIRequest:
         else:
             return
 
-    def process_records(self):
+    def log_success(self):
         with open("results.txt", "a") as logfile:
             logfile.write(f"SUCCESS: Reviewed {self.total_records} from {self.set}. \n")
             logfile.write(f"\tFound {self.good_records} records with manifests.\n")
@@ -158,7 +158,7 @@ class MultipleRequests:
                 catalog.write(f"\t<set id='{oai_set}'>\n")
                 x = OAIRequest(self.endpoint, oai_set, self.metadata_format)
                 x.read_list_records()
-                x.process_records()
+                x.log_success()
                 for record in x.manifested_records:
                     catalog.write(f"\t\t<item id='{record}'/>\n")
                 catalog.write("\t</set>\n")
