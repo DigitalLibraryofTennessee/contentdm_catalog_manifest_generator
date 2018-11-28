@@ -4,6 +4,7 @@ import json
 import xmltodict
 import requests
 import yaml
+from tqdm import tqdm
 
 config = yaml.load(open("sets.yml", "r"))
 
@@ -146,15 +147,16 @@ class OAIRequest:
 
 class MultipleRequests:
     def __init__(self, endpoint, provider, metadata_format):
+        self.metadata_format = metadata_format
         self.sets = config[provider][metadata_format]
         self.endpoint = endpoint
 
     def make_oai_calls(self):
         with open("catalog.xml", "w") as catalog:
             catalog.write("<catalog>\n")
-            for oai_set in self.sets:
+            for oai_set in tqdm(self.sets):
                 catalog.write(f"\t<set id='{oai_set}'>\n")
-                x = OAIRequest(self.endpoint, oai_set)
+                x = OAIRequest(self.endpoint, oai_set, self.metadata_format)
                 x.read_list_records()
                 x.process_records()
                 for record in x.manifested_records:
