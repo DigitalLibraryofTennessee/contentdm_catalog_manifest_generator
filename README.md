@@ -12,14 +12,24 @@ The catalog lists all records from a provider with a corresponding IIIF manifest
 2. cd contentdm_catalog_manifest_generator
 3. pipenv install Pipfile
 
-## Running
+## Generate catalog for all sets by metadata prefix from a provider.
 
 Assuming you installed with pipenv:
 
 ```
 pipenv shell
-python generate.py -p provider_name -m metadata_format
+python generate.py -p utc -m oai_qdc
 ```
+
+## Generate catalog for just one set from a provider
+
+Assuming you installed with pipenv:
+
+```
+pipenv shell
+python generate.py -p utc -m oai_qdc -s p16877coll6
+```
+
 
 ## Sample Output
 

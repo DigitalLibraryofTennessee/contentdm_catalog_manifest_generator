@@ -145,16 +145,16 @@ class OAIRequest:
         return
 
 
-class MultipleRequests:
+class RequestHandler:
     def __init__(self, endpoint, provider, metadata_format):
         self.metadata_format = metadata_format
-        self.sets = config[provider][metadata_format]
         self.endpoint = endpoint
+        self.provider = provider
 
-    def make_oai_calls(self):
+    def make_muliple_oai_requests(self):
         with open("catalog.xml", "w") as catalog:
             catalog.write("<catalog>\n")
-            for oai_set in tqdm(self.sets):
+            for oai_set in tqdm(config[self.provider][self.metadata_format]):
                 catalog.write(f"\t<set id='{oai_set}'>\n")
                 x = OAIRequest(self.endpoint, oai_set, self.metadata_format)
                 x.read_list_records()
@@ -165,11 +165,36 @@ class MultipleRequests:
             catalog.write("</catalog>\n")
         return
 
+    def make_single_oai_request(self, oai_set):
+        with open("catalog.xml", "w") as catalog:
+            catalog.write("<catalog>\n")
+            catalog.write(f"\t<set id='{oai_set}'>\n")
+            x = OAIRequest(self.endpoint, oai_set, self.metadata_format)
+            x.read_list_records()
+            x.log_success()
+            for record in x.manifested_records:
+                catalog.write(f"\t\t<item id='{record}'/>\n")
+            catalog.write("\t</set>\n")
+            catalog.write("</catalog>\n")
+        return
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate Manifest from Object in Context')
-    parser.add_argument("-u", "--url", dest="url", help="Specify url", required=True)
     parser.add_argument("-p", "--provider", dest="provider", help="Specify provider", required=True)
     parser.add_argument("-m", "--metadata_format", dest="format", help="Specify metadata format", required=True)
+    parser.add_argument("-o", "--operation", dest="operation", help="Specify multiple or single set request.  "
+                                                                    "Multiple is default.",
+                        required=False, default="multiple")
+    parser.add_argument("-s", "--set", dest="set", help="If using single operation, use to specify set.",
+                        required=False)
     args = parser.parse_args()
-    MultipleRequests("https://dpla.lib.utk.edu/repox/OAIHandler", args.provider, args.format).make_oai_calls()
+    if args.operation == "multiple":
+        RequestHandler("https://dpla.lib.utk.edu/repox/OAIHandler", args.provider, args.format).make_muliple_oai_requests()
+    elif args.operation == "single":
+        RequestHandler("https://dpla.lib.utk.edu/repox/OAIHandler", args.provider,
+                       args.format).make_single_oai_request(args.set)
+    else:
+        print("Operation not valid.\n")
+
