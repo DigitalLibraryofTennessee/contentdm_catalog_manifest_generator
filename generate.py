@@ -18,11 +18,19 @@ class ManifestGenerator:
         x = url.split("/")
         if x[3] != "digital":
             x = self.convert_old_url_formatting(url)
-        return f"https://{x[2]}/digital/iiif/{x[5]}/{x[7]}/info.json"
+        try:
+            return f"https://{x[2]}/digital/iiif/{x[5]}/{x[7]}/info.json"
+        except IndexError:
+            return "badrequest"
+        except requests.exceptions.SSLError:
+            return "badrequest"
 
     def fetch_manifest(self):
-        r = requests.get(self.url)
-        self.status_code = r.status_code
+        if self.url != "badrequest":
+            r = requests.get(self.url, verify=False)
+            self.status_code = r.status_code
+        else:
+            self.status_code = 404
         return
 
     @staticmethod
@@ -177,7 +185,6 @@ class RequestHandler:
             catalog.write("\t</set>\n")
             catalog.write("</catalog>\n")
         return
-
 
 
 if __name__ == "__main__":
