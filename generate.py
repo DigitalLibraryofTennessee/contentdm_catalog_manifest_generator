@@ -5,6 +5,7 @@ import xmltodict
 import requests
 import yaml
 from tqdm import tqdm
+import urllib3
 
 config = yaml.load(open("sets.yml", "r"))
 
@@ -188,6 +189,7 @@ class RequestHandler:
 
 
 if __name__ == "__main__":
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     parser = argparse.ArgumentParser(description='Generate Manifest from Object in Context')
     parser.add_argument("-p", "--provider", dest="provider", help="Specify provider", required=True)
     parser.add_argument("-m", "--metadata_format", dest="format", help="Specify metadata format", required=True)
