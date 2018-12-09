@@ -4,6 +4,11 @@ import yaml
 
 settings = yaml.load(open("config.yml", "r"))
 
+
+class DLTNDumper(yaml.Dumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(DLTNDumper, self).increase_indent(flow, False)
+
 # Class Designed to Create a Yaml File with Metadata Formats and OAI Sets based on Repox
 class YamlWriter:
     def __init__(self, filename):
@@ -22,7 +27,7 @@ class YamlWriter:
                     our_provider[i][mf] = []
                 for oai_set in sets:
                     our_provider[i][oai_set["format"]].append(oai_set["name"])
-                yaml.dump(our_provider, my_yaml, default_flow_style=False)
+                yaml.dump(our_provider, my_yaml, default_flow_style=False, Dumper=DLTNDumper)
                 i += 1
         return
 
@@ -65,5 +70,5 @@ class RepoxRequest:
 
 
 if __name__ == "__main__":
-    x = YamlWriter("test.yml")
+    x = YamlWriter("sets.yml")
     x.build()
