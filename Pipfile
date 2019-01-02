@@ -10,6 +10,7 @@ xmltodict = "*"
 requests = "*"
 tqdm = "*"
 pyyaml = "*"
+repox = "*"
 
 [dev-packages]
 
