@@ -100,7 +100,8 @@
         },
         "repox": {
             "hashes": [
-                "sha256:e3afda80bb3ae6b4e484e48b022227f174f551e37de290eb754001d5f424128b"
+                "sha256:e3afda80bb3ae6b4e484e48b022227f174f551e37de290eb754001d5f424128b",
+                "sha256:ff1ca73069f1ca15e03acc5bf528af135d905aac1aa766887f0f0d41c0317eec"
             ],
             "index": "pypi",
             "version": "==0.0.2"
