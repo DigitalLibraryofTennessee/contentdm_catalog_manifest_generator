@@ -1,7 +1,7 @@
-cmhf:
-  MODS:
-    - country_mods
-crossroads:
+1:
+  oai_qdc:
+    - cmhf_musicaudio
+2:
   oai_dc:
     - crossroads1
     - crossroads2
@@ -12,7 +12,24 @@ crossroads:
     - crossroads7
     - crossroads8
     - crossroads9
-knox:
+  xoai:
+    - crossroads_beale
+    - crossroads_everett_cook
+    - crossroads_family_and_friends
+    - crossroads_gaiety
+    - crossroads_gaze
+    - crossroads_lavender
+    - crossroads_lemoyne
+    - crossroads_maps
+    - crossroads_memphis_star
+    - crossroads_memphis_world
+    - crossroads_oral_histories
+    - crossroads_sanitation
+    - crossroads_sugarmon
+    - crossroads_triangle
+    - rhodes_farnsworth
+    - rhodes_sternberg
+3:
   oai_dc:
     - p15136coll1
     - p15136coll2
@@ -21,9 +38,8 @@ knox:
     - p265301coll005
     - p265301coll7
     - p265301coll9
-memphis:
+4:
   oai_dc:
-    - p13039coll1
     - p13039coll2
     - p13039coll3
     - p13039coll5
@@ -46,7 +62,7 @@ memphis:
     - p16108coll9
     - p16108coll6
     - p16108coll8
-mtsu:
+5:
   oai_dc:
     - mtsu_buchanan
     - mtsu_cannon
@@ -57,11 +73,13 @@ mtsu:
     - mtsu_rchs
     - mtsu_schools
     - mtsu_shades
-nash:
+6:
   oai_dc:
     - nr
     - p15769coll18
-tsla:
+  oai_qdc:
+    - nash_p15769coll19
+7:
   oai_dc:
     - agricult
     - broadsides
@@ -125,7 +143,63 @@ tsla:
     - tsla_p15138coll44
     - stateguard
     - Strickland
-utc:
+8:
+  mods:
+    - bcpl
+    - utk_3d
+    - utk_acwiley
+    - utk_adams
+    - utk_agee
+    - utk_agrtfhs
+    - utk_airscoop
+    - utk_alumnus
+    - utk_arrow
+    - utk_arrscrap
+    - utk_arrsimple
+    - utk_brehm
+    - utk_cdf
+    - utk_charlie
+    - utk_colloquy
+    - utk_comm
+    - utk_derris
+    - utk_druid
+    - utk_egypt
+    - utk_ekcd
+    - utk_emancip
+    - utk_fiftyyears
+    - utk_gamble
+    - utk_hbs
+    - utk_heilman
+    - utk_humbug
+    - utk_indtruth
+    - utk_kefauver
+    - utk_knoxgardens
+    - utk_mpabaker
+    - utk_mugwump
+    - utk_phoenix
+    - utk_playbills
+    - utk_postcards
+    - utk_rfj
+    - utk_roth
+    - utk_ruskin
+    - utk_sanborn
+    - utk_scopes
+    - utk_smhc
+    - utk_sturley
+    - utk_swim
+    - utk_tenncities
+    - utk_tenngirl
+    - utk_thompson
+    - utk_univmonthly
+    - utk_utsmc
+    - utk_vanvactor
+    - utk_voice
+    - utk_volvoices
+    - utk_vpmoore
+    - utk_wderfilms
+  oai_dc:
+    - nfp
+9:
   oai_qdc:
     - p16877coll1
     - p16877coll2
@@ -155,50 +229,6 @@ utc:
     - utc_p16877coll26
     - utc_p16877coll27
     - utc_p16877coll28
-utk:
-  mods:
-    - bcpl
-    - utk_acwiley
-    - utk_adams
-    - utk_agee
-    - utk_airscoop
-    - utk_alumnus
-    - utk_arrow
-    - utk_arrscrap
-    - utk_arrsimple
-    - utk_cdf
-    - utk_charlie
-    - utk_colloquy
-    - utk_comm
-    - utk_derris
-    - utk_egypt
-    - utk_ekcd
-    - utk_fiftyyears
-    - utk_gamble
-    - utk_hbs
-    - utk_heilman
-    - utk_humbug
-    - utk_kefauver
-    - utk_knoxgardens
-    - utk_mpabaker
-    - utk_playbills
-    - utk_postcards
-    - utk_rfj
-    - utk_roth
-    - utk_ruskin
-    - utk_sanborn
-    - utk_scopes
-    - utk_smhc
-    - utk_sturley
-    - utk_swim
-    - utk_tenncities
-    - utk_thompson
-    - utk_univmonthly
-    - utk_utsmc
-    - utk_vanvactor
-    - utk_voice
-    - utk_volvoices
-    - utk_vpmoore
-    - utk_wderfilms
-  oai_dc:
-    - nfp
+    - utc_p16877coll29
+    - utc_p16877coll30
+    - utc_p16877coll31
