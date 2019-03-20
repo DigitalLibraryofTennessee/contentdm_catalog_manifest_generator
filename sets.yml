@@ -1,7 +1,7 @@
-1:
+cmhf:
   oai_qdc:
     - cmhf_musicaudio
-2:
+rhodes:
   oai_dc:
     - crossroads1
     - crossroads2
@@ -29,7 +29,7 @@
     - crossroads_triangle
     - rhodes_farnsworth
     - rhodes_sternberg
-3:
+knox:
   oai_dc:
     - p15136coll1
     - p15136coll2
@@ -38,7 +38,7 @@
     - p265301coll005
     - p265301coll7
     - p265301coll9
-4:
+memphis:
   oai_dc:
     - p13039coll2
     - p13039coll3
@@ -62,7 +62,7 @@
     - p16108coll9
     - p16108coll6
     - p16108coll8
-5:
+mtsu:
   oai_dc:
     - mtsu_buchanan
     - mtsu_cannon
@@ -73,13 +73,13 @@
     - mtsu_rchs
     - mtsu_schools
     - mtsu_shades
-6:
+nash:
   oai_dc:
     - nr
     - p15769coll18
   oai_qdc:
     - nash_p15769coll19
-7:
+tsla:
   oai_dc:
     - agricult
     - broadsides
@@ -143,7 +143,7 @@
     - tsla_p15138coll44
     - stateguard
     - Strickland
-8:
+utk:
   mods:
     - bcpl
     - utk_3d
@@ -199,7 +199,7 @@
     - utk_wderfilms
   oai_dc:
     - nfp
-9:
+utc:
   oai_qdc:
     - p16877coll1
     - p16877coll2
