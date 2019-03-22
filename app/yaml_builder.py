@@ -4,7 +4,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath('..'))
 
-settings = yaml.load(open("config.yml", "r"))
+settings = yaml.safe_load(open("config.yml", "r"))
 
 
 class DLTNDumper(yaml.Dumper):

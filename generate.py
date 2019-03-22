@@ -7,7 +7,7 @@ import yaml
 from tqdm import tqdm
 import urllib3
 
-config = yaml.load(open("sets.yml", "r"))
+config = yaml.safe_load(open("sets.yml", "r"))
 
 
 class ManifestGenerator:
