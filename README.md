@@ -12,6 +12,21 @@ The catalog lists all records from a provider with a corresponding IIIF manifest
 2. cd contentdm_catalog_manifest_generator
 3. pipenv install Pipfile
 
+## Setting up your config
+
+Copy default_config.yml to config.yml and edit your authentication information.
+
+## Building YAML
+
+Both methods below require a sets.yml file for harvesting data.  This should be refactored, but for now always run this 
+first:
+
+```
+python app/yaml_builder.py
+```
+
+This will update the sets.yml file at root that is read.
+
 ## Generate catalog for all sets by metadata prefix from a provider.
 
 Assuming you installed with pipenv:
