@@ -25,11 +25,11 @@ class YamlWriter:
             for provider in providers:
                 sets = repox.get_list_of_sets_from_provider_by_format(provider)
                 metadata_formats = set([oai_set["format"] for oai_set in sets if oai_set["format"]])
-                our_provider = {i: {}}
+                our_provider = {provider: {}}
                 for mf in metadata_formats:
-                    our_provider[i][mf] = []
+                    our_provider[provider][mf] = []
                 for oai_set in sets:
-                    our_provider[i][oai_set["format"]].append(oai_set["name"])
+                    our_provider[provider][oai_set["format"]].append(oai_set["name"])
                 yaml.dump(our_provider, my_yaml, default_flow_style=False, Dumper=DLTNDumper)
                 i += 1
         return
