@@ -42,7 +42,7 @@ Assuming you installed with pipenv:
 
 ```
 pipenv shell
-python generate.py -p utc -m oai_qdc -s p16877coll6
+python generate.py -p utc -m oai_qdc -s p16877coll6 -o single
 ```
 
 
