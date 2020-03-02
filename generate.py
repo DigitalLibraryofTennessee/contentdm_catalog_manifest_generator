@@ -6,6 +6,8 @@ import requests
 import yaml
 from tqdm import tqdm
 import urllib3
+from requests.exceptions import ConnectionError
+from time import sleep
 
 config = yaml.safe_load(open("sets.yml", "r"))
 
@@ -28,8 +30,12 @@ class ManifestGenerator:
 
     def fetch_manifest(self):
         if self.url != "badrequest":
-            r = requests.get(self.url, verify=False)
-            self.status_code = r.status_code
+            try:
+                r = requests.get(self.url, verify=False)
+                self.status_code = r.status_code
+            except ConnectionError:
+                sleep(3)
+                self.fetch_manifest()
         else:
             self.status_code = 404
         return
