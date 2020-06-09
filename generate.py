@@ -22,7 +22,7 @@ class ManifestGenerator:
         if x[3] != "digital":
             x = self.convert_old_url_formatting(url)
         try:
-            return f"https://{x[2]}/digital/iiif/{x[5]}/{x[7]}/info.json"
+            return f"https://{x[2]}/digital/iiif/{x[5]}/{x[7]}/manifest.json"
         except IndexError:
             return "badrequest"
         except requests.exceptions.SSLError:
@@ -126,7 +126,7 @@ class OAIRequest:
         except KeyError as e:
             self.write_error_to_log(e)
         self.process_token(oai_document.findall('.//{http://www.openarchives.org/OAI/2.0/}resumptionToken'))
-        if self.status is not "Done":
+        if self.status != "Done":
             self.endpoint = f"{self.oai_base}?verb=ListRecords{self.token}"
             return self.read_list_records()
         else:
@@ -147,9 +147,8 @@ class OAIRequest:
             self.status = "Done"
             return
 
-    @staticmethod
-    def add_manifested_item_to_catalog(identifier):
-        with open("catalog.xml", "a") as catalog:
+    def add_manifested_item_to_catalog(self, identifier):
+        with open(f"{self.provider}.xml", "a") as catalog:
             catalog.write(f"\t\t<item id='{identifier}'/>\n")
         return
 
@@ -167,7 +166,7 @@ class RequestHandler:
         self.provider = provider
 
     def make_muliple_oai_requests(self):
-        with open("catalog.xml", "w") as catalog:
+        with open(f"{self.provider}.xml", "w") as catalog:
             catalog.write("<catalog>\n")
             for oai_set in tqdm(config[self.provider][self.metadata_format]):
                 catalog.write(f"\t<set id='{oai_set}'>\n")
@@ -181,7 +180,7 @@ class RequestHandler:
         return
 
     def make_single_oai_request(self, oai_set):
-        with open("catalog.xml", "w") as catalog:
+        with open(f"{self.provider}.xml", "w") as catalog:
             catalog.write("<catalog>\n")
             catalog.write(f"\t<set id='{oai_set}'>\n")
             x = OAIRequest(self.endpoint, oai_set, self.metadata_format)
