@@ -22,7 +22,7 @@ class ManifestGenerator:
         if x[3] != "digital":
             x = self.convert_old_url_formatting(url)
         try:
-            return f"https://{x[2]}/digital/iiif/{x[5]}/{x[7]}/manifest.json"
+            return f"https://{x[2]}/iiif/info/{x[5]}/{x[7]}/manifest.json"
         except IndexError:
             return "badrequest"
         except requests.exceptions.SSLError:
