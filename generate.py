@@ -33,6 +33,12 @@ class ManifestGenerator:
             try:
                 r = requests.get(self.url, verify=False)
                 self.status_code = r.status_code
+                if r.status_code == 200 and json.dumps(r.json()["@id"]).replace('"', '') == self.url:
+                    self.status_code = 200
+                    with open("good_records.log", "a") as good_records:
+                        good_records.write(f'{self.url}\n')
+                else:
+                    self.status_code = 510
             except ConnectionError:
                 sleep(3)
                 self.fetch_manifest()
@@ -91,6 +97,17 @@ class OAIRequest:
                 del an_object[key]
         return an_object
 
+    def _process_response(self, identifier):
+        x = ManifestGenerator(identifier)
+        x.fetch_manifest()
+        self.total_records += 1
+        if x.status_code == 404 or x.status_code == 510:
+            self.bad_records += 1
+        elif x.status_code == 200:
+            self.good_records += 1
+            self.manifested_records.append(identifier)
+        return
+
     def read_list_records(self):
         r = requests.get(f"{self.endpoint}")
         clean = self.remove_bad_unicode(r.content)
@@ -101,26 +118,11 @@ class OAIRequest:
             for record in metadata_as_json['OAI-PMH']['ListRecords']['record']:
                 try:
                     if type(record["metadata"][self.metadata_key]["dc:identifier"]) is str:
-                        x = ManifestGenerator(record["metadata"][self.metadata_key]["dc:identifier"])
-                        self.total_records += 1
-                        if x.status_code == 404:
-                            self.bad_records += 1
-                        elif x.status_code == 200:
-                            self.good_records += 1
-                            self.manifested_records.append(record["metadata"][self.metadata_key]["dc:identifier"])
+                        self._process_response(record["metadata"][self.metadata_key]["dc:identifier"])
                     elif type(record["metadata"][self.metadata_key]["dc:identifier"]) is list:
                         for identifier in record["metadata"][self.metadata_key]["dc:identifier"]:
                             if identifier.startswith("http"):
-                                x = ManifestGenerator(identifier)
-                                x.fetch_manifest()
-                                if x.status_code == 404:
-                                    self.bad_records += 1
-                                elif x.status_code == 200:
-                                    self.good_records += 1
-                                    self.manifested_records.append(identifier)
-                                else:
-                                    print(x.status_code)
-                                self.total_records += 1
+                                self._process_response(identifier)
                 except KeyError as e:
                     self.write_error_to_log(f"{e}\n\t{record}\n")
         except KeyError as e:
@@ -148,7 +150,7 @@ class OAIRequest:
             return
 
     def add_manifested_item_to_catalog(self, identifier):
-        with open(f"{self.provider}.xml", "a") as catalog:
+        with open(f"{self.provider}_{self.metadata_prefix}.xml", "a") as catalog:
             catalog.write(f"\t\t<item id='{identifier}'/>\n")
         return
 
@@ -166,7 +168,7 @@ class RequestHandler:
         self.provider = provider
 
     def make_muliple_oai_requests(self):
-        with open(f"{self.provider}.xml", "w") as catalog:
+        with open(f"{self.provider}_{self.metadata_format}.xml", "w") as catalog:
             catalog.write("<catalog>\n")
             for oai_set in tqdm(config[self.provider][self.metadata_format]):
                 catalog.write(f"\t<set id='{oai_set}'>\n")
@@ -180,7 +182,7 @@ class RequestHandler:
         return
 
     def make_single_oai_request(self, oai_set):
-        with open(f"{self.provider}.xml", "w") as catalog:
+        with open(f"{self.provider}_{self.metadata_format}.xml", "w") as catalog:
             catalog.write("<catalog>\n")
             catalog.write(f"\t<set id='{oai_set}'>\n")
             x = OAIRequest(self.endpoint, oai_set, self.metadata_format)
